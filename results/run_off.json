@@ -1,7 +1,7 @@
 {
   "mode": "off",
   "recovery": false,
-  "ran_at": "2026-10-25T11:39:32+00:00",
+  "ran_at": "2026-10-25T16:58:33+00:00",
   "tasks": [
     {
       "task": "login",
@@ -332,8 +332,38 @@
       "attempts": 16,
       "recoveries": 0,
       "error": ""
+    },
+    {
+      "task": "portal_customer_drilldown",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 3,
+      "steps_total": 3,
+      "attempts": 3,
+      "recoveries": 0,
+      "error": ""
+    },
+    {
+      "task": "portal_edit_and_verify",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 6,
+      "steps_total": 6,
+      "attempts": 6,
+      "recoveries": 0,
+      "error": ""
+    },
+    {
+      "task": "portal_settings_flow",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 4,
+      "steps_total": 4,
+      "attempts": 4,
+      "recoveries": 0,
+      "error": ""
     }
   ],
-  "passed": 24,
-  "total": 33
+  "passed": 27,
+  "total": 36
 }

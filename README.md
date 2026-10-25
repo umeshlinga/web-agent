@@ -56,7 +56,7 @@ difference.
   exact semantic grounding, fallback (structural) re-grounding, overlay
   dismissal, retry budget, and a JSONL run log (`logs/`) recording every
   observe, failure and recovery.
-- `src/tasks.py` — the 33-task suite; every step carries an explicit
+- `src/tasks.py` — the 36-task suite; every step carries an explicit
   postcondition written against the page.
 - `fixtures/` — the deterministic local pages (served via `file://`).
 - `scripts/run_eval.py` — runs the suite with recovery ON and OFF,
@@ -119,14 +119,19 @@ adversarial — the page mutates or obstructs mid-task:
   time; recovery must re-ground *and* dismiss, in sequence.
 
 Latest measured outcome (regenerate with the eval; see `RESULTS.md`):
-recovery ON passed all 33 tasks; recovery OFF passed the 24 controls
+recovery ON passed all 36 tasks; recovery OFF passed the 27 controls
 and failed all nine adversarial tasks — renamed targets were never
 found, covered buttons' clicks timed out, and decoys failed their
 postconditions. Seven adversarial tasks needed exactly one recovery
 with recovery ON; the two double-mutation tasks needed two. The suite
 includes a Business workflows group (a CRM record update, a four-step
 vendor application with a mid-flow correction, and a lead-entry flow
-that handles a duplicate warning), passed in both modes.
+that handles a duplicate warning) and a Portal navigation group —
+three tasks that follow links inside a multi-page CRM portal
+(dashboard → customer list → record → edit page → back to the list,
+plus a settings round trip) — all passed in both modes. Every fixture
+page is styled as a real product surface (shared nav, cards, tables
+and forms) rather than bare HTML.
 
 ## Setup
 
@@ -155,7 +160,7 @@ See `DEMO.md` for a real run transcript excerpt.
 
 ```
 src/         agent loop, snapshot, task definitions
-fixtures/    30 deterministic local HTML pages
+fixtures/    39 deterministic local HTML pages
 scripts/     run_eval.py — ON/OFF evaluation runner
 tests/       smoke test
 results/     raw run output (JSON)

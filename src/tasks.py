@@ -1,7 +1,7 @@
-"""Task suite: 8 tasks over local fixture pages.
+"""Task suite: 36 tasks over local fixture pages.
 
 Every step carries an explicit postcondition (verify) written against the
-page: visible text, row counts, element state. Two tasks are adversarial:
+page: visible text, row counts, element state. Nine tasks are adversarial:
 the page mutates mid-task so a locate-once / no-recovery agent fails.
 """
 from __future__ import annotations
@@ -753,6 +753,82 @@ TASKS.extend([
 ])
 
 
+# -- portal-navigation suite: 3 further tasks --------------------------------
+TASKS.extend([
+    Task(
+        name="portal_customer_drilldown",
+        fixture="portal_home.html",
+        description="Portal navigation: from the CRM dashboard, "
+                    "follow the Customers link to the customer list, "
+                    "open the Pulseworks record, check its contact "
+                    "and status on the detail page, then follow the "
+                    "Activity link and confirm the activity feed "
+                    "belongs to that customer.",
+        steps=[
+            Step("click", Target("link", text="Customers"),
+                 verify=visible_rows("#portal-customers tr", 4)),
+            Step("click", Target("link", text="Pulseworks"),
+                 verify=all_of(text_is("#cust-name", "Pulseworks"),
+                               text_is("#cust-contact", "Dana Ruiz"),
+                               text_is("#cust-status", "Prospect"))),
+            Step("click", Target("link", text="Activity"),
+                 verify=text_contains("#activity-list",
+                                      "Onboarding call with Dana Ruiz")),
+        ],
+    ),
+    Task(
+        name="portal_edit_and_verify",
+        fixture="portal_customers.html",
+        description="Portal navigation: open the Pulseworks record "
+                    "from the customer list, follow Edit customer, "
+                    "change its status to Active and its phone on "
+                    "the edit page, save, confirm the saved banner "
+                    "and new values on the detail page, then follow "
+                    "Back to customers and confirm the list row "
+                    "shows the same new values.",
+        steps=[
+            Step("click", Target("link", text="Pulseworks"),
+                 verify=text_is("#cust-name", "Pulseworks")),
+            Step("click", Target("link", text="Edit customer"),
+                 verify=element_visible("#portal-edit-form")),
+            Step("select", Target("combobox", label="Status"), "Active",
+                 verify=field_value_is("#pe-status", "Active")),
+            Step("fill", Target("textbox", label="Phone"), "555-0142",
+                 verify=field_value_is("#pe-phone", "555-0142")),
+            Step("click", Target("button", text="Save changes"),
+                 verify=all_of(
+                     text_is("#portal-saved", "Record saved for Pulseworks"),
+                     text_is("#cust-status", "Active"),
+                     text_is("#cust-phone", "555-0142"))),
+            Step("click", Target("link", text="Back to customers"),
+                 verify=all_of(
+                     cell_text_is("#portal-customers", 0, 2, "Active"),
+                     cell_text_is("#portal-customers", 0, 3, "555-0142"))),
+        ],
+    ),
+    Task(
+        name="portal_settings_flow",
+        fixture="portal_home.html",
+        description="Portal navigation: from the dashboard, follow "
+                    "the Settings link, change the timezone to "
+                    "Central and turn on the weekly email digest, "
+                    "save, and confirm the dashboard shows the new "
+                    "settings summary.",
+        steps=[
+            Step("click", Target("link", text="Settings"),
+                 verify=element_visible("#portal-settings-form")),
+            Step("select", Target("combobox", label="Timezone"), "Central",
+                 verify=field_value_is("#ps-tz", "Central")),
+            Step("check", Target("checkbox", label="Weekly email digest"),
+                 verify=is_checked("#ps-digest")),
+            Step("click", Target("button", text="Save settings"),
+                 verify=text_is("#home-settings-summary",
+                                "Timezone: Central · Weekly digest on")),
+        ],
+    ),
+])
+
+
 # Category of each task, used for the per-category breakdown in RESULTS.md.
 TASK_CATEGORIES: dict[str, str] = {
     "login": "Forms & wizards",
@@ -788,4 +864,7 @@ TASK_CATEGORIES: dict[str, str] = {
     "crm_record_update": "Business workflows",
     "vendor_application": "Business workflows",
     "lead_entry": "Business workflows",
+    "portal_customer_drilldown": "Portal navigation",
+    "portal_edit_and_verify": "Portal navigation",
+    "portal_settings_flow": "Portal navigation",
 }

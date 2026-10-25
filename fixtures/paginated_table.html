@@ -1,30 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><title>Employees</title></head>
+<head><meta charset="utf-8"><title>Employees</title>
+<style>
+:root{--ink:#182420;--muted:#5d6f66;--bg:#edf2ee;--card:#fff;--line:#dce5dd;--line2:#e9efe9;--green:#0b7a37;--green2:#17a34a;--green-soft:#e8f5ec;--red:#b3261e;--red-soft:#fdecea;--amber:#9a6a06;--amber-soft:#fdf3e0;--blue:#175cd3;--blue-soft:#eaf1fe;--radius:14px;--shadow:0 1px 2px rgba(18,42,28,.05),0 12px 32px rgba(18,42,28,.08)}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.topbar{background:linear-gradient(100deg,#06351c,#0b7a37 55%,#17a34a);color:#fff}
+.topbar-in{max-width:1060px;margin:0 auto;padding:13px 20px;display:flex;align-items:center;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px}
+.brand .mark{width:26px;height:26px;border-radius:8px;background:rgba(255,255,255,.2);display:inline-flex;align-items:center;justify-content:center;font-size:13px}
+.topnav{margin-left:auto;display:flex;gap:4px}
+.topnav span,.topnav a{color:rgba(255,255,255,.85);font-size:13.5px;font-weight:600;padding:6px 11px;border-radius:8px;text-decoration:none}
+.topnav a:hover{background:rgba(255,255,255,.15);color:#fff}
+.topnav .here{background:rgba(255,255,255,.17);color:#fff}
+.page{max-width:1060px;margin:0 auto;padding:26px 20px 60px}
+.page-head{margin:4px 0 20px}
+.page-head h1{font-size:27px;line-height:1.2;margin:0 0 4px;font-weight:750;letter-spacing:-.02em}
+.page-head p{margin:0;color:var(--muted);font-size:14.5px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px 26px;margin:0 0 20px}
+.card h2{font-size:17px;margin:0 0 6px}
+.card .sub{color:var(--muted);font-size:14px;margin:0 0 14px}
+fieldset{border:1px solid var(--line);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow);padding:22px 26px 26px;margin:0 0 20px}
+legend{font-size:16px;font-weight:700;padding:0 8px}
+label{display:block;font-size:13px;font-weight:650;color:#33463b;margin:15px 0 6px}
+input[type=text],input[type=password],input[type=email],input[type=search],select,textarea{width:100%;padding:10px 12px;border:1px solid #c9d6cb;border-radius:9px;font:inherit;font-size:14.5px;background:#fff;color:var(--ink);outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--green2);box-shadow:0 0 0 3px rgba(23,163,74,.18)}
+input[type=checkbox],input[type=radio]{width:16px;height:16px;accent-color:var(--green);vertical-align:-2px;margin-right:7px}
+button,.btn{display:inline-block;font:inherit;font-size:14.5px;font-weight:650;padding:10px 18px;border-radius:9px;border:1px solid #c9d6cb;background:#fff;color:var(--ink);cursor:pointer;text-decoration:none;box-shadow:0 1px 2px rgba(18,42,28,.05)}
+button:hover,.btn:hover{border-color:#a9c2ae;background:#f6faf6}
+.btn-primary{background:linear-gradient(120deg,var(--green),var(--green2))!important;border-color:transparent!important;color:#fff!important;box-shadow:0 4px 14px rgba(11,122,55,.28)}
+.btn-row{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap;align-items:center}
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:14.5px}
+thead th{font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);text-align:left;padding:10px 14px;background:#f4f8f4;border-bottom:1px solid var(--line)}
+tbody td{padding:11px 14px;border-bottom:1px solid var(--line2);vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#f6faf6}
+.notice{border-radius:11px;padding:13px 16px;font-size:14.5px;font-weight:600;margin:0 0 20px}
+.notice-ok{background:var(--green-soft);color:#075e2a;border:1px solid #bfe6cd}
+.notice-err{background:var(--red-soft);color:var(--red);border:1px solid #f5c6c2}
+.notice ul,.errors{margin:0;padding-left:18px}
+.errors{color:var(--red);font-size:14px}
+.muted{color:var(--muted)}
+.pill{display:inline-block;padding:2.5px 10px;border-radius:999px;font-size:12.5px;font-weight:700;background:#eef2ee;color:#43564b}
+tr[data-status="Active"] .pill,.pill.ok{background:var(--green-soft);color:#075e2a}
+tr[data-status="Prospect"] .pill,.pill.info{background:var(--blue-soft);color:var(--blue)}
+tr[data-status="On hold"] .pill,.pill.warn{background:var(--amber-soft);color:var(--amber)}
+.stats{display:flex;gap:14px;flex-wrap:wrap;margin:0 0 20px}
+.stat{flex:1;min-width:150px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.stat b{display:block;font-size:24px;line-height:1.15}
+.stat span{color:var(--muted);font-size:13px}
+.kv{display:grid;grid-template-columns:160px 1fr;gap:9px 18px;font-size:14.5px;margin:0}
+.kv dt{color:var(--muted);font-weight:600}
+.kv dd{margin:0}
+.done span{text-decoration:line-through;color:var(--muted)}
+.filterbar{max-width:260px;margin-bottom:18px}
+.filterbar label{margin-top:0}
+thead th button{padding:4px 10px;font-size:12px;text-transform:uppercase;letter-spacing:.07em}
+.pager{display:flex;gap:10px;align-items:center;margin-top:16px}
+#page-info{font-size:14px;color:var(--muted);font-weight:600}
+</style></head>
 <body>
-  <h1>Employees</h1>
-  <!-- 12 rows, page size 4: department filter + score sort + paging
-       interact — the visible window depends on all three. -->
-  <label for="dept">Department</label>
-  <select id="dept" name="dept">
-    <option value="All">All</option>
-    <option value="Eng">Eng</option>
-    <option value="Ops">Ops</option>
-    <option value="Sales">Sales</option>
-  </select>
-  <table id="emp-table">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Department</th>
-        <th><button id="sort-score" type="button">Score</button></th>
-      </tr>
-    </thead>
-    <tbody id="emp"></tbody>
-  </table>
-  <button id="pg-prev" type="button">Prev</button>
-  <span id="page-info"></span>
-  <button id="pg-next" type="button">Next</button>
+  <div class="topbar"><div class="topbar-in">
+    <div class="brand"><span class="mark">A</span>Acme People</div>
+    <div class="topnav"><span class="here">Directory</span><span>Teams</span><span>Org chart</span></div>
+  </div></div>
+  <div class="page">
+    <div class="page-head">
+      <h1>Employees</h1>
+      <p>Everyone at Acme — filter by department, sort by score, page through the results.</p>
+    </div>
+    <!-- 12 rows, page size 4: department filter + score sort + paging
+         interact — the visible window depends on all three. -->
+    <div class="card">
+      <div class="filterbar">
+        <label for="dept">Department</label>
+        <select id="dept" name="dept">
+          <option value="All">All</option>
+          <option value="Eng">Eng</option>
+          <option value="Ops">Ops</option>
+          <option value="Sales">Sales</option>
+        </select>
+      </div>
+      <table id="emp-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Department</th>
+            <th><button id="sort-score" type="button">Score</button></th>
+          </tr>
+        </thead>
+        <tbody id="emp"></tbody>
+      </table>
+      <div class="pager">
+        <button id="pg-prev" type="button">Prev</button>
+        <span id="page-info"></span>
+        <button id="pg-next" type="button">Next</button>
+      </div>
+    </div>
+  </div>
   <script>
     var DATA = [
       ['Priya', 'Eng', 88], ['Marco', 'Eng', 74], ['June', 'Eng', 95],

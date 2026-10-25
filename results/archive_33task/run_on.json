@@ -1,0 +1,339 @@
+{
+  "mode": "on",
+  "recovery": true,
+  "ran_at": "2026-10-25T11:39:04+00:00",
+  "tasks": [
+    {
+      "task": "login",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 3,
+      "steps_total": 3,
+      "attempts": 3,
+      "recoveries": 0,
+      "error": ""
+    },
+    {
+      "task": "table_filter",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 2,
+      "steps_total": 2,
+      "attempts": 2,
+      "recoveries": 0,
+      "error": ""
+    },
+    {
+      "task": "multistep_form",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 7,
+      "steps_total": 7,
+      "attempts": 7,
+      "recoveries": 0,
+      "error": ""
+    },
+    {
+      "task": "settings_form",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 4,
+      "steps_total": 4,
+      "attempts": 4,
+      "recoveries": 0,
+      "error": ""
+    },
+    {
+      "task": "todo_list",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 5,
+      "steps_total": 5,
+      "attempts": 5,
+      "recoveries": 0,
+      "error": ""
+    },
+    {
+      "task": "sort_table",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 1,
+      "steps_total": 1,
+      "attempts": 1,
+      "recoveries": 0,
+      "error": ""
+    },
+    {
+      "task": "adversarial_label_change",
+      "adversarial": true,
+      "success": true,
+      "steps_completed": 3,
+      "steps_total": 3,
+      "attempts": 4,
+      "recoveries": 1,
+      "error": ""
+    },
+    {
+      "task": "adversarial_overlay_move",
+      "adversarial": true,
+      "success": true,
+      "steps_completed": 3,
+      "steps_total": 3,
+      "attempts": 4,
+      "recoveries": 1,
+      "error": ""
+    },
+    {
+      "task": "checkout_full",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 11,
+      "steps_total": 11,
+      "attempts": 11,
+      "recoveries": 0,
+      "error": ""
+    },
+    {
+      "task": "validation_form",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 10,
+      "steps_total": 10,
+      "attempts": 10,
+      "recoveries": 0,
+      "error": ""
+    },
+    {
+      "task": "paginated_table",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 5,
+      "steps_total": 5,
+      "attempts": 5,
+      "recoveries": 0,
+      "error": ""
+    },
+    {
+      "task": "dependent_settings",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 6,
+      "steps_total": 6,
+      "attempts": 6,
+      "recoveries": 0,
+      "error": ""
+    },
+    {
+      "task": "stacked_modals",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 4,
+      "steps_total": 4,
+      "attempts": 4,
+      "recoveries": 0,
+      "error": ""
+    },
+    {
+      "task": "delayed_render",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 3,
+      "steps_total": 3,
+      "attempts": 3,
+      "recoveries": 0,
+      "error": ""
+    },
+    {
+      "task": "date_picker",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 2,
+      "steps_total": 2,
+      "attempts": 2,
+      "recoveries": 0,
+      "error": ""
+    },
+    {
+      "task": "autocomplete_select",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 2,
+      "steps_total": 2,
+      "attempts": 2,
+      "recoveries": 0,
+      "error": ""
+    },
+    {
+      "task": "wizard_backtrack",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 7,
+      "steps_total": 7,
+      "attempts": 7,
+      "recoveries": 0,
+      "error": ""
+    },
+    {
+      "task": "dependent_dropdowns",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 3,
+      "steps_total": 3,
+      "attempts": 3,
+      "recoveries": 0,
+      "error": ""
+    },
+    {
+      "task": "cart_update",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 3,
+      "steps_total": 3,
+      "attempts": 3,
+      "recoveries": 0,
+      "error": ""
+    },
+    {
+      "task": "tabbed_panels",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 6,
+      "steps_total": 6,
+      "attempts": 6,
+      "recoveries": 0,
+      "error": ""
+    },
+    {
+      "task": "accordion_form",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 7,
+      "steps_total": 7,
+      "attempts": 7,
+      "recoveries": 0,
+      "error": ""
+    },
+    {
+      "task": "inline_edit_table",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 3,
+      "steps_total": 3,
+      "attempts": 3,
+      "recoveries": 0,
+      "error": ""
+    },
+    {
+      "task": "otp_code_entry",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 5,
+      "steps_total": 5,
+      "attempts": 5,
+      "recoveries": 0,
+      "error": ""
+    },
+    {
+      "task": "adversarial_double_label_change",
+      "adversarial": true,
+      "success": true,
+      "steps_completed": 4,
+      "steps_total": 4,
+      "attempts": 6,
+      "recoveries": 2,
+      "error": ""
+    },
+    {
+      "task": "adversarial_moved_button",
+      "adversarial": true,
+      "success": true,
+      "steps_completed": 2,
+      "steps_total": 2,
+      "attempts": 3,
+      "recoveries": 1,
+      "error": ""
+    },
+    {
+      "task": "adversarial_banner_reappears",
+      "adversarial": true,
+      "success": true,
+      "steps_completed": 3,
+      "steps_total": 3,
+      "attempts": 4,
+      "recoveries": 1,
+      "error": ""
+    },
+    {
+      "task": "adversarial_late_overlay",
+      "adversarial": true,
+      "success": true,
+      "steps_completed": 2,
+      "steps_total": 2,
+      "attempts": 3,
+      "recoveries": 1,
+      "error": ""
+    },
+    {
+      "task": "adversarial_renamed_field",
+      "adversarial": true,
+      "success": true,
+      "steps_completed": 3,
+      "steps_total": 3,
+      "attempts": 4,
+      "recoveries": 1,
+      "error": ""
+    },
+    {
+      "task": "adversarial_decoy_button",
+      "adversarial": true,
+      "success": true,
+      "steps_completed": 3,
+      "steps_total": 3,
+      "attempts": 4,
+      "recoveries": 1,
+      "error": ""
+    },
+    {
+      "task": "adversarial_rename_under_overlay",
+      "adversarial": true,
+      "success": true,
+      "steps_completed": 3,
+      "steps_total": 3,
+      "attempts": 5,
+      "recoveries": 2,
+      "error": ""
+    },
+    {
+      "task": "crm_record_update",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 6,
+      "steps_total": 6,
+      "attempts": 6,
+      "recoveries": 0,
+      "error": ""
+    },
+    {
+      "task": "vendor_application",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 14,
+      "steps_total": 14,
+      "attempts": 14,
+      "recoveries": 0,
+      "error": ""
+    },
+    {
+      "task": "lead_entry",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 16,
+      "steps_total": 16,
+      "attempts": 16,
+      "recoveries": 0,
+      "error": ""
+    }
+  ],
+  "passed": 33,
+  "total": 33
+}
