@@ -1,8 +1,10 @@
-# browser-agent-lab
+# web-agent
 
-A small, working **browser agent with failure recovery**, built by
-Umesh Linga as a portfolio/research project. It drives headless Chromium
-(Playwright) through a suite of local HTML tasks using an
+**web-agent** is an autonomous agent that operates web interfaces
+end to end, built by Umesh Linga as a portfolio/research project. It
+drives headless Chromium (Playwright) through a suite of local HTML
+tasks — opening pages, completing multi-step tasks, and checking its
+own work after every step — using an
 **observe → act → verify → recover** loop, and it measures — with an
 ablation, not adjectives — what the recovery half of that loop is worth.
 
