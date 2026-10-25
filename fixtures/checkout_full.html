@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Store checkout</title></head>
+<body>
+  <h1>Checkout</h1>
+
+  <fieldset id="co-step1">
+    <legend>Delivery address</legend>
+    <label for="co-name">Full name</label>
+    <input id="co-name" name="co-name" type="text">
+    <label for="co-street">Street address</label>
+    <input id="co-street" name="co-street" type="text">
+    <label for="co-city">City</label>
+    <input id="co-city" name="co-city" type="text">
+    <label for="co-zip">ZIP code</label>
+    <input id="co-zip" name="co-zip" type="text">
+    <button id="co-next1" type="button">Continue to payment</button>
+  </fieldset>
+
+  <fieldset id="co-step2" hidden>
+    <legend>Payment</legend>
+    <label for="co-card">Card number</label>
+    <input id="co-card" name="co-card" type="text">
+    <label for="co-exp">Expiry</label>
+    <input id="co-exp" name="co-exp" type="text">
+    <label for="co-cvc">CVC</label>
+    <input id="co-cvc" name="co-cvc" type="text">
+    <span>Payment method</span>
+    <label for="pm-card">Card</label>
+    <input id="pm-card" name="pm" type="radio" value="Card">
+    <label for="pm-paypal">PayPal</label>
+    <input id="pm-paypal" name="pm" type="radio" value="PayPal">
+    <button id="co-back2" type="button">Back</button>
+    <button id="co-next2" type="button">Review order</button>
+  </fieldset>
+
+  <fieldset id="co-step3" hidden>
+    <legend>Review</legend>
+    <p id="co-review"></p>
+    <button id="co-place" type="button">Place order</button>
+  </fieldset>
+
+  <div id="co-done" hidden></div>
+
+  <script>
+    document.getElementById('co-next1').addEventListener('click', function () {
+      var n = document.getElementById('co-name').value;
+      var s = document.getElementById('co-street').value;
+      var c = document.getElementById('co-city').value;
+      var z = document.getElementById('co-zip').value;
+      if (!n || !s || !c || !z) return;
+      document.getElementById('co-step1').hidden = true;
+      document.getElementById('co-step2').hidden = false;
+    });
+    document.getElementById('co-back2').addEventListener('click', function () {
+      document.getElementById('co-step2').hidden = true;
+      document.getElementById('co-step1').hidden = false;
+    });
+    document.getElementById('co-next2').addEventListener('click', function () {
+      var card = document.getElementById('co-card').value;
+      var pm = document.querySelector('input[name="pm"]:checked');
+      if (!card || !pm) return;
+      var n = document.getElementById('co-name').value;
+      var c = document.getElementById('co-city').value;
+      document.getElementById('co-review').textContent =
+        'Deliver to ' + n + ', ' + c + ' — Pay by ' + pm.value +
+        ' — Total: $129.00';
+      document.getElementById('co-step2').hidden = true;
+      document.getElementById('co-step3').hidden = false;
+    });
+    document.getElementById('co-place').addEventListener('click', function () {
+      var d = document.getElementById('co-done');
+      d.textContent = 'Order confirmed. Total: $129.00';
+      d.hidden = false;
+      document.getElementById('co-step3').hidden = true;
+    });
+  </script>
+</body>
+</html>

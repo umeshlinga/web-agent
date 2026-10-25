@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Document editor</title>
+<style>
+  body { min-height: 1200px; }
+  #save-zone { margin-top: 900px; }
+  #banner {
+    position: fixed; left: 0; right: 0; bottom: 0; height: 45vh;
+    background: rgba(20, 20, 30, 0.92); color: #fff; z-index: 60;
+    padding: 16px;
+  }
+</style></head>
+<body>
+  <h1>Document editor</h1>
+  <!-- Adversarial: a promo banner covers the lower viewport. It can
+       be dismissed, but typing into the coupon field brings it back,
+       so it is covering the Save button (far down the page) again by
+       the time the agent tries to click it. -->
+  <label for="coupon">Coupon code</label>
+  <input id="coupon" name="coupon" type="text">
+  <form id="panel2">
+    <div id="save-zone">
+      <button id="save-btn" type="submit">Save changes</button>
+    </div>
+  </form>
+  <div id="saved-msg" hidden></div>
+  <script>
+    function showBanner() {
+      if (document.getElementById('banner')) return;
+      var b = document.createElement('div');
+      b.id = 'banner';
+      var p = document.createElement('p');
+      p.textContent = 'Special offer: 20% off annual plans.';
+      var x = document.createElement('button');
+      x.id = 'banner-close';
+      x.type = 'button';
+      x.textContent = '×';
+      x.addEventListener('click', function () { b.remove(); });
+      b.appendChild(p);
+      b.appendChild(x);
+      document.body.appendChild(b);
+    }
+    showBanner();
+    document.getElementById('coupon').addEventListener('input', showBanner);
+    document.getElementById('panel2').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var m = document.getElementById('saved-msg');
+      m.textContent = 'Changes saved';
+      m.hidden = false;
+    });
+  </script>
+</body>
+</html>

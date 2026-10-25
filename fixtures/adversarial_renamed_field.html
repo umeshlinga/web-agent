@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Address</title></head>
+<body>
+  <h1>Address</h1>
+  <!-- Adversarial: choosing Canada renames the postal field's label
+       from "ZIP code" to "Postal code". The field itself never moves
+       — only its label changes, so label-based grounding goes stale
+       mid-task. -->
+  <form id="address-form">
+    <label for="country">Country</label>
+    <select id="country" name="country">
+      <option value="USA">USA</option>
+      <option value="Canada">Canada</option>
+    </select>
+  </form>
+  <form id="postal-form">
+    <label for="postal" id="postal-label">ZIP code</label>
+    <input id="postal" name="postal" type="text">
+    <button id="addr-save" type="submit">Save address</button>
+  </form>
+  <div id="addr-saved" hidden></div>
+  <script>
+    document.getElementById('country').addEventListener('change', function () {
+      document.getElementById('postal-label').textContent =
+        (this.value === 'Canada') ? 'Postal code' : 'ZIP code';
+    });
+    document.getElementById('postal-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!document.getElementById('postal').value) return;
+      var d = document.getElementById('addr-saved');
+      d.textContent = 'Address saved';
+      d.hidden = false;
+    });
+  </script>
+</body>
+</html>

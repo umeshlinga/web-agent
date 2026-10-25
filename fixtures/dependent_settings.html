@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Preferences</title></head>
+<body>
+  <h1>Preferences</h1>
+  <!-- Toggles reveal dependent fields: the frequency select only
+       exists once email notifications are on, and the second-factor
+       controls only exist once two-factor auth is on. -->
+  <form id="prefs-form">
+    <label for="email-notif">Email notifications</label>
+    <input id="email-notif" name="email-notif" type="checkbox">
+    <div id="email-prefs" hidden>
+      <label for="freq">Frequency</label>
+      <select id="freq" name="freq">
+        <option value="Daily">Daily</option>
+        <option value="Weekly">Weekly</option>
+        <option value="Monthly">Monthly</option>
+      </select>
+    </div>
+    <label for="twofa">Two-factor authentication</label>
+    <input id="twofa" name="twofa" type="checkbox">
+    <div id="twofa-prefs" hidden>
+      <label for="factor">Second factor</label>
+      <select id="factor" name="factor">
+        <option value="Authenticator app">Authenticator app</option>
+        <option value="SMS">SMS</option>
+      </select>
+      <label for="phone">Phone number</label>
+      <input id="phone" name="phone" type="text">
+    </div>
+    <button id="prefs-save" type="submit">Save preferences</button>
+  </form>
+  <div id="prefs-saved" hidden></div>
+  <script>
+    document.getElementById('email-notif').addEventListener('change', function () {
+      document.getElementById('email-prefs').hidden = !this.checked;
+    });
+    document.getElementById('twofa').addEventListener('change', function () {
+      document.getElementById('twofa-prefs').hidden = !this.checked;
+    });
+    document.getElementById('prefs-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var freq = document.getElementById('email-notif').checked
+        ? document.getElementById('freq').value : 'off';
+      var factor = document.getElementById('twofa').checked
+        ? document.getElementById('factor').value : 'off';
+      var d = document.getElementById('prefs-saved');
+      d.textContent = 'Preferences saved';
+      d.hidden = false;
+      d.setAttribute('data-summary', 'Email: ' + freq + ' · 2FA: ' + factor);
+    });
+  </script>
+</body>
+</html>

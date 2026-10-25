@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Newsletter</title></head>
+<body>
+  <!-- Adversarial: opting into partner offers inserts a promotional
+       "Subscribe" button ABOVE the real form. It has the exact same
+       label as the form's submit button but only reports that the
+       offer has ended. Exact grounding picks it first (DOM order). -->
+  <div id="promo-slot"></div>
+  <p id="promo-msg"></p>
+  <form id="newsletter-form">
+    <label for="nl-email">Email address</label>
+    <input id="nl-email" name="nl-email" type="text">
+    <label for="partner">Email me partner offers too</label>
+    <input id="partner" name="partner" type="checkbox">
+    <button id="nl-subscribe" type="submit">Subscribe</button>
+  </form>
+  <div id="nl-done" hidden></div>
+  <script>
+    document.getElementById('partner').addEventListener('change', function () {
+      var slot = document.getElementById('promo-slot');
+      if (!this.checked) { slot.innerHTML = ''; return; }
+      var b = document.createElement('button');
+      b.id = 'promo-subscribe';
+      b.type = 'button';
+      b.textContent = 'Subscribe';
+      b.addEventListener('click', function () {
+        document.getElementById('promo-msg').textContent =
+          'This partner offer has ended';
+      });
+      slot.appendChild(b);
+    });
+    document.getElementById('newsletter-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var email = document.getElementById('nl-email').value;
+      if (!email) return;
+      var d = document.getElementById('nl-done');
+      d.textContent = 'Subscribed ' + email;
+      d.hidden = false;
+    });
+  </script>
+</body>
+</html>

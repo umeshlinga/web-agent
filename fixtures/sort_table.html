@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Scores</title></head>
+<body>
+  <h1>Scores</h1>
+  <table id="scores">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th><button id="sort-score" type="button">Score</button></th>
+      </tr>
+    </thead>
+    <tbody id="rows">
+      <tr><td>Mia</td><td>72</td></tr>
+      <tr><td>Leo</td><td>91</td></tr>
+      <tr><td>Zoe</td><td>65</td></tr>
+      <tr><td>Sam</td><td>88</td></tr>
+    </tbody>
+  </table>
+  <script>
+    document.getElementById('sort-score').addEventListener('click', function () {
+      var tbody = document.getElementById('rows');
+      var rows = Array.from(tbody.querySelectorAll('tr'));
+      rows.sort(function (a, b) {
+        return Number(b.children[1].textContent) - Number(a.children[1].textContent);
+      });
+      rows.forEach(function (r) { tbody.appendChild(r); });
+    });
+  </script>
+</body>
+</html>

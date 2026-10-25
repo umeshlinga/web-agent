@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Setup wizard</title></head>
+<body>
+  <h1>Setup wizard</h1>
+  <!-- Multi-page wizard with a back step: step 2 can return to
+       step 1, and values entered earlier must survive the round
+       trip before the wizard can finish. -->
+
+  <fieldset id="wz-step1">
+    <legend>Person</legend>
+    <label for="wz-fname">First name</label>
+    <input id="wz-fname" name="wz-fname" type="text">
+    <button id="wz-next1" type="button">Next</button>
+  </fieldset>
+
+  <fieldset id="wz-step2" hidden>
+    <legend>Team</legend>
+    <label for="wz-team">Team name</label>
+    <input id="wz-team" name="wz-team" type="text">
+    <button id="wz-back2" type="button">Back</button>
+    <button id="wz-next2" type="button">Next</button>
+  </fieldset>
+
+  <fieldset id="wz-step3" hidden>
+    <legend>Review</legend>
+    <p id="wz-review"></p>
+    <button id="wz-finish" type="button">Finish</button>
+  </fieldset>
+
+  <div id="wz-done" hidden></div>
+
+  <script>
+    document.getElementById('wz-next1').addEventListener('click', function () {
+      if (!document.getElementById('wz-fname').value) return;
+      document.getElementById('wz-step1').hidden = true;
+      document.getElementById('wz-step2').hidden = false;
+    });
+    document.getElementById('wz-back2').addEventListener('click', function () {
+      document.getElementById('wz-step2').hidden = true;
+      document.getElementById('wz-step1').hidden = false;
+    });
+    document.getElementById('wz-next2').addEventListener('click', function () {
+      if (!document.getElementById('wz-team').value) return;
+      document.getElementById('wz-review').textContent =
+        'First name: ' + document.getElementById('wz-fname').value +
+        ' — Team: ' + document.getElementById('wz-team').value;
+      document.getElementById('wz-step2').hidden = true;
+      document.getElementById('wz-step3').hidden = false;
+    });
+    document.getElementById('wz-finish').addEventListener('click', function () {
+      var d = document.getElementById('wz-done');
+      d.textContent = 'Wizard complete for ' +
+        document.getElementById('wz-fname').value;
+      d.hidden = false;
+      document.getElementById('wz-step3').hidden = true;
+    });
+  </script>
+</body>
+</html>

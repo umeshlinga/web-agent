@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Verify code</title></head>
+<body>
+  <h1>Enter the 4-digit code</h1>
+  <!-- Segmented code entry: four single-digit boxes, focus advances
+       after each digit; verification needs all four filled. -->
+  <form id="otp-form">
+    <label for="d1">Digit 1</label>
+    <input id="d1" name="d1" type="text" maxlength="1" size="1">
+    <label for="d2">Digit 2</label>
+    <input id="d2" name="d2" type="text" maxlength="1" size="1">
+    <label for="d3">Digit 3</label>
+    <input id="d3" name="d3" type="text" maxlength="1" size="1">
+    <label for="d4">Digit 4</label>
+    <input id="d4" name="d4" type="text" maxlength="1" size="1">
+    <button id="otp-btn" type="submit">Verify code</button>
+  </form>
+  <p id="otp-status"></p>
+  <script>
+    ['d1', 'd2', 'd3'].forEach(function (id, i) {
+      document.getElementById(id).addEventListener('input', function () {
+        if (this.value) document.getElementById('d' + (i + 2)).focus();
+      });
+    });
+    document.getElementById('otp-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var code = ['d1', 'd2', 'd3', 'd4'].map(function (id) {
+        return document.getElementById(id).value;
+      }).join('');
+      document.getElementById('otp-status').textContent =
+        (/^\d{4}$/.test(code)) ? 'Code verified' : 'Enter all 4 digits';
+    });
+  </script>
+</body>
+</html>

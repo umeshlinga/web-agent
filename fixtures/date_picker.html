@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Appointment</title>
+<style>
+  #cal { border: 1px solid #888; width: 280px; padding: 8px; }
+  #cal .grid button { width: 36px; margin: 1px; }
+</style></head>
+<body>
+  <h1>Book an appointment</h1>
+  <!-- Date-picker style control: clicking the field opens a calendar
+       grid; the value only exists once a day cell is picked. -->
+  <label for="day-input">Appointment day</label>
+  <input id="day-input" name="day-input" type="text" readonly>
+  <div id="cal" hidden>
+    <p>Select a day</p>
+    <div class="grid" id="cal-grid"></div>
+    <button id="cal-prev" type="button">Prev</button>
+    <button id="cal-next" type="button">Next</button>
+  </div>
+  <p id="cal-note"></p>
+  <script>
+    var grid = document.getElementById('cal-grid');
+    for (var d = 1; d <= 31; d++) {
+      (function (day) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.textContent = String(day);
+        b.addEventListener('click', function () {
+          document.getElementById('day-input').value = 'Day ' + day;
+          document.getElementById('cal').hidden = true;
+          document.getElementById('cal-note').textContent =
+            'Selected day ' + day;
+        });
+        grid.appendChild(b);
+      })(d);
+    }
+    document.getElementById('day-input').addEventListener('click', function () {
+      document.getElementById('cal').hidden = false;
+    });
+  </script>
+</body>
+</html>

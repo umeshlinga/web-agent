@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Payment</title>
+<style>
+  body { min-height: 1200px; }
+  #pay-zone { margin-top: 900px; }
+  #cookie-bar {
+    position: fixed; left: 0; right: 0; bottom: 0; height: 45vh;
+    background: rgba(20, 20, 30, 0.92); color: #fff; z-index: 70;
+    padding: 16px;
+  }
+</style></head>
+<body>
+  <h1>Payment</h1>
+  <!-- Adversarial (combined): typing the card number does two things
+       at once — the pay button is renamed (new id, new label) AND a
+       cookie bar rises over the lower viewport where the button
+       sits. Recovery has to re-ground AND dismiss, in sequence. -->
+  <form id="pay-form">
+    <label for="cc-name">Name on card</label>
+    <input id="cc-name" name="cc-name" type="text">
+    <label for="cc-num">Card number</label>
+    <input id="cc-num" name="cc-num" type="text">
+    <div id="pay-zone">
+      <button id="pay-btn" type="submit">Pay now</button>
+    </div>
+  </form>
+  <div id="pay-success" hidden></div>
+  <script>
+    var mutated = false;
+    document.getElementById('cc-num').addEventListener('input', function () {
+      if (mutated) return;
+      mutated = true;
+      var btn = document.getElementById('pay-btn');
+      btn.id = 'complete-btn';
+      btn.textContent = 'Complete purchase';
+      var bar = document.createElement('div');
+      bar.id = 'cookie-bar';
+      var p = document.createElement('p');
+      p.textContent = 'We use cookies to improve your experience.';
+      var acc = document.createElement('button');
+      acc.id = 'cookie-accept';
+      acc.type = 'button';
+      acc.textContent = 'Accept';
+      acc.addEventListener('click', function () { bar.remove(); });
+      bar.appendChild(p);
+      bar.appendChild(acc);
+      document.body.appendChild(bar);
+    });
+    document.getElementById('pay-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var n = document.getElementById('cc-name').value;
+      var c = document.getElementById('cc-num').value;
+      if (n && c) {
+        var s = document.getElementById('pay-success');
+        s.textContent = 'Payment confirmed';
+        s.hidden = false;
+      }
+    });
+  </script>
+</body>
+</html>

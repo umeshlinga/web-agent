@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Order checkout</title></head>
+<body>
+  <h1>Order checkout</h1>
+  <!-- Adversarial: the form's single call-to-action button is renamed
+       TWICE during the task — once when the name field is typed into
+       ("Continue" → "Proceed to address") and again when the coupon
+       field is typed into (→ "Place order"). A locate-once agent
+       loses the button at the first rename. -->
+  <form id="order-form">
+    <div id="panel1">
+      <label for="ord-name">Full name</label>
+      <input id="ord-name" name="ord-name" type="text">
+    </div>
+    <div id="panel2" hidden>
+      <label for="ord-coupon">Coupon code</label>
+      <input id="ord-coupon" name="ord-coupon" type="text">
+    </div>
+    <button id="cta" type="submit">Continue</button>
+  </form>
+  <div id="ord-success" hidden></div>
+  <script>
+    var stage = 1;
+    document.getElementById('ord-name').addEventListener('input', function () {
+      document.getElementById('cta').textContent = 'Proceed to address';
+    });
+    document.getElementById('ord-coupon').addEventListener('input', function () {
+      document.getElementById('cta').textContent = 'Place order';
+    });
+    document.getElementById('order-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (stage === 1) {
+        if (!document.getElementById('ord-name').value) return;
+        stage = 2;
+        document.getElementById('panel1').hidden = true;
+        document.getElementById('panel2').hidden = false;
+      } else {
+        var s = document.getElementById('ord-success');
+        s.textContent = 'Order placed';
+        s.hidden = false;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Booking</title>
+<style>
+  #promo {
+    position: fixed; inset: 0; background: rgba(10, 10, 20, 0.6);
+    z-index: 90; color: #fff; padding: 40px;
+  }
+</style></head>
+<body>
+  <h1>Booking</h1>
+  <!-- Adversarial: the target button never moves or changes — but
+       clicking "Proceed to confirmation" also raises a full-screen
+       promo overlay that covers the confirmation panel, so the
+       Confirm click is intercepted until the overlay is dismissed. -->
+  <button id="proceed-btn" type="button">Proceed to confirmation</button>
+  <div id="confirm-panel" hidden>
+    <p>Confirm your booking.</p>
+    <button id="confirm-btn" type="button">Confirm order</button>
+  </div>
+  <div id="promo" hidden>
+    <p>Limited offer: add travel insurance to this booking.</p>
+    <button id="promo-close" type="button">Close</button>
+  </div>
+  <div id="late-done" hidden></div>
+  <script>
+    document.getElementById('proceed-btn').addEventListener('click', function () {
+      document.getElementById('confirm-panel').hidden = false;
+      document.getElementById('promo').hidden = false;
+    });
+    document.getElementById('promo-close').addEventListener('click', function () {
+      document.getElementById('promo').hidden = true;
+    });
+    document.getElementById('confirm-btn').addEventListener('click', function () {
+      var d = document.getElementById('late-done');
+      d.textContent = 'Order confirmed';
+      d.hidden = false;
+    });
+  </script>
+</body>
+</html>

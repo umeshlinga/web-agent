@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Order review</title></head>
+<body>
+  <!-- Adversarial: checking "Add gift wrap" (an unrelated option)
+       re-renders the action bar. The working Checkout button moves
+       out of the toolbar into the order-summary form, and the
+       toolbar keeps a stale button with the same label that only
+       shows a hint. Exact grounding picks the stale one first. -->
+  <div id="toolbar">
+    <button id="tb-checkout" type="button">Checkout</button>
+  </div>
+  <h1>Order review</h1>
+  <form id="order-summary">
+    <p>Notebook × 1 — $4.00</p>
+    <label for="giftwrap">Add gift wrap</label>
+    <input id="giftwrap" name="giftwrap" type="checkbox">
+    <div id="summary-actions"></div>
+  </form>
+  <p id="move-hint"></p>
+  <div id="move-success" hidden></div>
+  <script>
+    function placeOrder() {
+      var s = document.getElementById('move-success');
+      s.textContent = 'Order confirmed';
+      s.hidden = false;
+    }
+    document.getElementById('tb-checkout').addEventListener('click', placeOrder);
+    document.getElementById('order-summary').addEventListener('submit', function (e) {
+      e.preventDefault();
+      placeOrder();
+    });
+    document.getElementById('giftwrap').addEventListener('change', function () {
+      if (!this.checked) return;
+      var tb = document.getElementById('toolbar');
+      tb.innerHTML = '';
+      var stale = document.createElement('button');
+      stale.id = 'tb-checkout-stale';
+      stale.type = 'button';
+      stale.textContent = 'Checkout';
+      stale.addEventListener('click', function () {
+        document.getElementById('move-hint').textContent =
+          'Please use the checkout button in the order summary';
+      });
+      tb.appendChild(stale);
+      var real = document.createElement('button');
+      real.id = 'sum-checkout';
+      real.type = 'submit';
+      real.textContent = 'Checkout';
+      document.getElementById('summary-actions').appendChild(real);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Contacts</title></head>
+<body>
+  <h1>Contacts</h1>
+  <!-- Inline row editing: Edit swaps the row's cells for inputs and
+       an Edit button for a Save button; the agent must act on the
+       row in its edited state. -->
+  <table>
+    <thead><tr><th>Name</th><th>Email</th><th></th></tr></thead>
+    <tbody id="contacts">
+      <tr>
+        <td>Ada Byron</td><td>ada@old.example</td>
+        <td><button type="button" class="edit-btn">Edit</button></td>
+      </tr>
+      <tr>
+        <td>Grace Hopper</td><td>grace@example.com</td>
+        <td><button type="button" class="edit-btn">Edit</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <script>
+    document.querySelectorAll('#contacts .edit-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var tr = btn.closest('tr');
+        var name = tr.children[0].textContent;
+        var email = tr.children[1].textContent;
+        tr.children[0].innerHTML = '';
+        tr.children[1].innerHTML = '';
+        var ni = document.createElement('input');
+        ni.type = 'text';
+        ni.name = 'edit-name';
+        ni.value = name;
+        var ei = document.createElement('input');
+        ei.type = 'text';
+        ei.name = 'edit-email';
+        ei.value = email;
+        tr.children[0].appendChild(ni);
+        tr.children[1].appendChild(ei);
+        btn.textContent = 'Save row';
+        btn.className = 'save-btn';
+        btn.addEventListener('click', function save() {
+          tr.children[0].textContent = ni.value;
+          tr.children[1].textContent = ei.value;
+          btn.textContent = 'Edit';
+          btn.className = 'edit-btn';
+          btn.removeEventListener('click', save);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

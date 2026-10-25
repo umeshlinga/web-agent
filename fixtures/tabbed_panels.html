@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Account tabs</title></head>
+<body>
+  <h1>Account</h1>
+  <!-- Tabbed interface: each panel's controls only exist (visibly)
+       while its tab is active; work is spread across three tabs. -->
+  <div id="tabs">
+    <button id="tab-profile" type="button">Profile</button>
+    <button id="tab-billing" type="button">Billing</button>
+    <button id="tab-security" type="button">Security</button>
+  </div>
+
+  <div id="panel-profile">
+    <label for="disp-name">Display name</label>
+    <input id="disp-name" name="disp-name" type="text">
+  </div>
+  <div id="panel-billing" hidden>
+    <label for="plan-cycle">Plan cycle</label>
+    <select id="plan-cycle" name="plan-cycle">
+      <option value="Monthly">Monthly</option>
+      <option value="Yearly">Yearly</option>
+    </select>
+  </div>
+  <div id="panel-security" hidden>
+    <label for="login-alerts">Login alerts</label>
+    <input id="login-alerts" name="login-alerts" type="checkbox">
+  </div>
+
+  <button id="save-all" type="button">Save all</button>
+  <div id="tabs-saved" hidden></div>
+
+  <script>
+    var PANELS = ['profile', 'billing', 'security'];
+    PANELS.forEach(function (name) {
+      document.getElementById('tab-' + name).addEventListener('click', function () {
+        PANELS.forEach(function (n) {
+          document.getElementById('panel-' + n).hidden = (n !== name);
+        });
+      });
+    });
+    document.getElementById('save-all').addEventListener('click', function () {
+      var d = document.getElementById('tabs-saved');
+      d.textContent = 'All settings saved';
+      d.hidden = false;
+    });
+  </script>
+</body>
+</html>

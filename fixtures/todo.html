@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Todo</title>
+<style>.done span { text-decoration: line-through; }</style></head>
+<body>
+  <h1>Todo list</h1>
+  <label for="new-item">New item</label>
+  <input id="new-item" name="new-item" type="text">
+  <button id="add-btn" type="button">Add</button>
+  <ul id="list"></ul>
+  <script>
+    document.getElementById('add-btn').addEventListener('click', function () {
+      var inp = document.getElementById('new-item');
+      var text = inp.value.trim();
+      if (!text) return;
+      var li = document.createElement('li');
+      var cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.name = 'done-toggle';
+      cb.setAttribute('aria-label', 'Mark done: ' + text);
+      cb.addEventListener('change', function () {
+        li.classList.toggle('done', cb.checked);
+      });
+      var span = document.createElement('span');
+      span.textContent = text;
+      li.appendChild(cb);
+      li.appendChild(span);
+      document.getElementById('list').appendChild(li);
+      inp.value = '';
+    });
+  </script>
+</body>
+</html>

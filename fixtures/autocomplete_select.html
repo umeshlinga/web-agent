@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Trip planner</title></head>
+<body>
+  <h1>Trip planner</h1>
+  <!-- Search-and-select autocomplete: typing renders suggestion
+       buttons; the field is only complete once a suggestion is
+       picked (the raw typed text is not the value). -->
+  <label for="dest">Destination</label>
+  <input id="dest" name="dest" type="text">
+  <div id="suggestions"></div>
+  <p id="chosen"></p>
+  <script>
+    var PLACES = ['Alpine Meadows', 'Alps View Lodge', 'Baltic Bay',
+                  'Coral Coast', 'Granite Falls'];
+    document.getElementById('dest').addEventListener('input', function () {
+      var q = this.value.toLowerCase();
+      var box = document.getElementById('suggestions');
+      box.innerHTML = '';
+      if (!q) return;
+      PLACES.filter(function (p) {
+        return p.toLowerCase().includes(q);
+      }).forEach(function (p) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.textContent = p;
+        b.addEventListener('click', function () {
+          document.getElementById('dest').value = p;
+          document.getElementById('chosen').textContent = 'Selected: ' + p;
+          box.innerHTML = '';
+        });
+        box.appendChild(b);
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Settings</title></head>
+<body>
+  <h1>Settings</h1>
+  <form id="settings-form">
+    <label for="theme">Theme</label>
+    <select id="theme" name="theme">
+      <option value="Light">Light</option>
+      <option value="Dark">Dark</option>
+    </select>
+    <label for="notify">Enable notifications</label>
+    <input id="notify" name="notify" type="checkbox">
+    <span>Density</span>
+    <label for="dens-comfort">Comfortable</label>
+    <input id="dens-comfort" name="density" type="radio" value="Comfortable">
+    <label for="dens-compact">Compact</label>
+    <input id="dens-compact" name="density" type="radio" value="Compact">
+    <button id="save-btn" type="submit">Save settings</button>
+  </form>
+  <div id="saved" hidden></div>
+  <p id="summary"></p>
+  <script>
+    document.getElementById('settings-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var theme = document.getElementById('theme').value;
+      var notify = document.getElementById('notify').checked;
+      var dens = document.querySelector('input[name="density"]:checked');
+      var s = document.getElementById('saved');
+      s.textContent = 'Settings saved';
+      s.hidden = false;
+      document.getElementById('summary').textContent =
+        'Theme: ' + theme + ' · Notifications: ' + (notify ? 'on' : 'off') +
+        ' · Density: ' + (dens ? dens.value : 'none');
+    });
+  </script>
+</body>
+</html>

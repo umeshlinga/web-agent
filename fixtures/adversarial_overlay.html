@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Workspace settings</title>
+<style>
+  body { min-height: 1200px; }
+  #save-zone { margin-top: 900px; }
+  #cookie {
+    position: fixed; left: 0; right: 0; bottom: 0; height: 45vh;
+    background: rgba(20, 20, 30, 0.92); color: #fff; z-index: 50;
+    padding: 16px;
+  }
+</style></head>
+<body>
+  <h1>Workspace settings</h1>
+  <!-- Adversarial: checking "Advanced settings" (1) replaces the Save
+       button with a new one (new id, new label) far down the page and
+       (2) a fixed cookie overlay covers the lower viewport, so clicks
+       on the relocated button are intercepted until it is dismissed. -->
+  <div id="panel">
+    <label for="advanced">Advanced settings</label>
+    <input id="advanced" name="advanced" type="checkbox">
+    <div id="advanced-fields" hidden>
+      <label for="level">Log level</label>
+      <select id="level" name="level">
+        <option value="Basic">Basic</option>
+        <option value="Verbose">Verbose</option>
+      </select>
+    </div>
+    <button id="save-btn" type="button">Save</button>
+    <div id="save-zone"></div>
+  </div>
+  <div id="saved-msg" hidden></div>
+  <div id="cookie">
+    <p>We use cookies to improve your experience.</p>
+    <button id="cookie-accept" type="button">Accept</button>
+  </div>
+  <script>
+    document.getElementById('advanced').addEventListener('change', function () {
+      document.getElementById('advanced-fields').hidden = false;
+      var old = document.getElementById('save-btn');
+      var fresh = document.createElement('button');
+      fresh.id = 'save-btn-final';
+      fresh.type = 'button';
+      fresh.textContent = 'Save changes';
+      fresh.addEventListener('click', doSave);
+      document.getElementById('save-zone').appendChild(fresh);
+      old.remove();
+    });
+    function doSave() {
+      var lvl = document.getElementById('level').value;
+      var m = document.getElementById('saved-msg');
+      m.textContent = 'Settings saved (level: ' + lvl + ')';
+      m.hidden = false;
+    }
+    document.getElementById('save-btn').addEventListener('click', doSave);
+    document.getElementById('cookie-accept').addEventListener('click', function () {
+      document.getElementById('cookie').remove();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Create account</title></head>
+<body>
+  <h1>Create account</h1>
+
+  <fieldset id="step1">
+    <legend>About you</legend>
+    <label for="fullname">Full name</label>
+    <input id="fullname" name="fullname" type="text">
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email">
+    <button id="next1" type="button">Next</button>
+  </fieldset>
+
+  <fieldset id="step2" hidden>
+    <legend>Plan</legend>
+    <label for="plan">Plan</label>
+    <select id="plan" name="plan">
+      <option value="Free">Free</option>
+      <option value="Pro">Pro</option>
+      <option value="Team">Team</option>
+    </select>
+    <label for="newsletter">Email me product news</label>
+    <input id="newsletter" name="newsletter" type="checkbox">
+    <button id="next2" type="button">Next</button>
+  </fieldset>
+
+  <fieldset id="step3" hidden>
+    <legend>Review</legend>
+    <p id="review"></p>
+    <button id="create" type="button">Create account</button>
+  </fieldset>
+
+  <div id="done" hidden></div>
+
+  <script>
+    document.getElementById('next1').addEventListener('click', function () {
+      var n = document.getElementById('fullname').value;
+      var e = document.getElementById('email').value;
+      if (!n || !e) return;
+      document.getElementById('step1').hidden = true;
+      document.getElementById('step2').hidden = false;
+    });
+    document.getElementById('next2').addEventListener('click', function () {
+      var n = document.getElementById('fullname').value;
+      var plan = document.getElementById('plan').value;
+      document.getElementById('review').textContent =
+        'Name: ' + n + ' — Plan: ' + plan;
+      document.getElementById('step2').hidden = true;
+      document.getElementById('step3').hidden = false;
+    });
+    document.getElementById('create').addEventListener('click', function () {
+      var n = document.getElementById('fullname').value;
+      var plan = document.getElementById('plan').value;
+      var d = document.getElementById('done');
+      d.textContent = 'Account created for ' + n + ' on the ' + plan + ' plan';
+      d.hidden = false;
+      document.getElementById('step3').hidden = true;
+    });
+  </script>
+</body>
+</html>

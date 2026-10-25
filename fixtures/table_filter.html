@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Produce table</title></head>
+<body>
+  <h1>Produce</h1>
+  <label for="q">Search</label>
+  <input id="q" name="q" type="text" placeholder="Search items">
+  <label for="cat">Category</label>
+  <select id="cat" name="cat">
+    <option value="All">All</option>
+    <option value="Fruit">Fruit</option>
+    <option value="Veg">Veg</option>
+  </select>
+  <table id="items">
+    <tbody>
+      <tr data-name="Apple" data-cat="Fruit"><td>Apple</td><td>Fruit</td></tr>
+      <tr data-name="Banana" data-cat="Fruit"><td>Banana</td><td>Fruit</td></tr>
+      <tr data-name="Carrot" data-cat="Veg"><td>Carrot</td><td>Veg</td></tr>
+      <tr data-name="Dates" data-cat="Fruit"><td>Dates</td><td>Fruit</td></tr>
+      <tr data-name="Endive" data-cat="Veg"><td>Endive</td><td>Veg</td></tr>
+      <tr data-name="Fig" data-cat="Fruit"><td>Fig</td><td>Fruit</td></tr>
+    </tbody>
+  </table>
+  <script>
+    function applyFilter() {
+      var q = document.getElementById('q').value.toLowerCase();
+      var cat = document.getElementById('cat').value;
+      document.querySelectorAll('#items tr').forEach(function (row) {
+        var okName = row.dataset.name.toLowerCase().includes(q);
+        var okCat = (cat === 'All' || row.dataset.cat === cat);
+        row.style.display = (okName && okCat) ? '' : 'none';
+      });
+    }
+    document.getElementById('q').addEventListener('input', applyFilter);
+    document.getElementById('cat').addEventListener('change', applyFilter);
+  </script>
+</body>
+</html>

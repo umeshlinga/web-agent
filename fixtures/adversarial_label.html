@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Checkout</title></head>
+<body>
+  <h1>Checkout</h1>
+  <!-- Adversarial: after the card field is first typed into, the pay
+       button is renamed (new id, new label) and moved to the bottom of
+       the form, below the summary block. A locator recorded earlier
+       (#pay-btn / "Pay now") goes stale mid-task. -->
+  <form id="checkout">
+    <label for="cc-name">Name on card</label>
+    <input id="cc-name" name="cc-name" type="text">
+    <label for="cc-num">Card number</label>
+    <input id="cc-num" name="cc-num" type="text">
+    <button id="pay-btn" type="submit">Pay now</button>
+    <div id="summary"><p>Order total: $42.00</p></div>
+  </form>
+  <div id="success" hidden></div>
+  <script>
+    var mutated = false;
+    document.getElementById('cc-num').addEventListener('input', function () {
+      if (mutated) return;
+      mutated = true;
+      var btn = document.getElementById('pay-btn');
+      btn.id = 'confirm-btn-x7';
+      btn.textContent = 'Confirm payment';
+      document.getElementById('summary').appendChild(btn);
+    });
+    document.getElementById('checkout').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var n = document.getElementById('cc-name').value;
+      var c = document.getElementById('cc-num').value;
+      if (n && c) {
+        var s = document.getElementById('success');
+        s.textContent = 'Payment confirmed';
+        s.hidden = false;
+      }
+    });
+  </script>
+</body>
+</html>

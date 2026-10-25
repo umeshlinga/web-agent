@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Cart</title></head>
+<body>
+  <h1>Shopping cart</h1>
+  <!-- Quantity edits recalculate line and grand totals; removing a
+       row changes both the row set and the total. -->
+  <table>
+    <thead><tr><th>Item</th><th>Qty</th><th>Line total</th><th></th></tr></thead>
+    <tbody id="cart">
+      <tr id="row-notebook">
+        <td>Notebook</td>
+        <td><input id="qty-notebook" name="qty-notebook" type="text" value="1"></td>
+        <td id="line-notebook">$4</td>
+        <td><button id="rm-notebook" type="button">Remove</button></td>
+      </tr>
+      <tr id="row-pen">
+        <td>Pen</td>
+        <td><input id="qty-pen" name="qty-pen" type="text" value="1"></td>
+        <td id="line-pen">$2</td>
+        <td><button id="rm-pen" type="button">Remove</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <p id="grand">Total: $6</p>
+  <script>
+    var PRICES = { notebook: 4, pen: 2 };
+    function recalc() {
+      var total = 0;
+      Object.keys(PRICES).forEach(function (k) {
+        var inp = document.getElementById('qty-' + k);
+        var line = document.getElementById('line-' + k);
+        if (!inp || !line) return;
+        var v = Number(inp.value) || 0;
+        line.textContent = '$' + (v * PRICES[k]);
+        total += v * PRICES[k];
+      });
+      document.getElementById('grand').textContent = 'Total: $' + total;
+    }
+    document.getElementById('qty-notebook').addEventListener('input', recalc);
+    document.getElementById('qty-pen').addEventListener('input', recalc);
+    document.getElementById('rm-notebook').addEventListener('click', function () {
+      document.getElementById('row-notebook').remove();
+      recalc();
+    });
+    document.getElementById('rm-pen').addEventListener('click', function () {
+      document.getElementById('row-pen').remove();
+      recalc();
+    });
+  </script>
+</body>
+</html>

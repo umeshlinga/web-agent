@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Shipping route</title></head>
+<body>
+  <h1>Shipping route</h1>
+  <!-- Dependent dropdowns: the state options only exist after a
+       country is chosen, and the city options only after a state. -->
+  <label for="dd-country">Country</label>
+  <select id="dd-country" name="dd-country">
+    <option value="">Choose…</option>
+    <option value="USA">USA</option>
+    <option value="Canada">Canada</option>
+  </select>
+  <label for="dd-state">State</label>
+  <select id="dd-state" name="dd-state">
+    <option value="">Choose…</option>
+  </select>
+  <label for="dd-city">City</label>
+  <select id="dd-city" name="dd-city">
+    <option value="">Choose…</option>
+  </select>
+  <p id="dd-summary"></p>
+  <script>
+    var STATES = { USA: ['California', 'Texas'],
+                   Canada: ['Ontario', 'Quebec'] };
+    var CITIES = { California: ['San Francisco', 'San Diego'],
+                   Texas: ['Austin', 'Dallas'],
+                   Ontario: ['Toronto', 'Ottawa'],
+                   Quebec: ['Montreal'] };
+    function fillSelect(sel, items) {
+      sel.innerHTML = '';
+      var first = document.createElement('option');
+      first.value = '';
+      first.textContent = 'Choose…';
+      sel.appendChild(first);
+      items.forEach(function (v) {
+        var o = document.createElement('option');
+        o.value = v;
+        o.textContent = v;
+        sel.appendChild(o);
+      });
+    }
+    function summary() {
+      var c = document.getElementById('dd-country').value;
+      var s = document.getElementById('dd-state').value;
+      var t = document.getElementById('dd-city').value;
+      document.getElementById('dd-summary').textContent =
+        (c && s && t) ? 'Route: ' + c + ' / ' + s + ' / ' + t : '';
+    }
+    document.getElementById('dd-country').addEventListener('change', function () {
+      fillSelect(document.getElementById('dd-state'), STATES[this.value] || []);
+      fillSelect(document.getElementById('dd-city'), []);
+      summary();
+    });
+    document.getElementById('dd-state').addEventListener('change', function () {
+      fillSelect(document.getElementById('dd-city'), CITIES[this.value] || []);
+      summary();
+    });
+    document.getElementById('dd-city').addEventListener('change', summary);
+  </script>
+</body>
+</html>

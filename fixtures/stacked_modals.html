@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Dialogs</title>
+<style>
+  .modal { position: fixed; inset: 0; background: rgba(10, 10, 20, 0.55); }
+  .card { background: #fff; margin: 120px auto; width: 320px; padding: 20px; }
+  #modal-a { z-index: 40; }
+  #modal-b { z-index: 80; }
+</style></head>
+<body>
+  <h1>Dialog stacking</h1>
+  <!-- A second modal opens on top of the first; the confirm control
+       lives in the top modal while the first stays open beneath it. -->
+  <button id="open-dialog" type="button">Open dialog</button>
+  <p id="dlg-status"></p>
+
+  <div id="modal-a" class="modal" hidden>
+    <div class="card">
+      <p>Step one of two: review the change summary.</p>
+      <button id="dlg-cancel" type="button">Cancel</button>
+      <button id="dlg-continue" type="button">Continue</button>
+    </div>
+  </div>
+
+  <div id="modal-b" class="modal" hidden>
+    <div class="card">
+      <p>Step two of two: confirm you understand.</p>
+      <label for="understand">I understand the terms</label>
+      <input id="understand" name="understand" type="checkbox">
+      <button id="dlg-confirm" type="button">Confirm</button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('open-dialog').addEventListener('click', function () {
+      document.getElementById('modal-a').hidden = false;
+    });
+    document.getElementById('dlg-cancel').addEventListener('click', function () {
+      document.getElementById('modal-a').hidden = true;
+    });
+    document.getElementById('dlg-continue').addEventListener('click', function () {
+      document.getElementById('modal-b').hidden = false;
+    });
+    document.getElementById('dlg-confirm').addEventListener('click', function () {
+      if (!document.getElementById('understand').checked) return;
+      document.getElementById('modal-b').hidden = true;
+      document.getElementById('modal-a').hidden = true;
+      document.getElementById('dlg-status').textContent = 'All dialogs completed';
+    });
+  </script>
+</body>
+</html>

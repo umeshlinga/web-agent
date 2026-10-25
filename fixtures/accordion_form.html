@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Order form</title></head>
+<body>
+  <h1>Order form</h1>
+  <!-- Accordion: opening one section closes the others, so each
+       field is reachable only while its section is expanded. -->
+  <button id="acc-ship-btn" type="button">Shipping details</button>
+  <div id="acc-ship" hidden>
+    <label for="acc-street">Street</label>
+    <input id="acc-street" name="acc-street" type="text">
+  </div>
+  <button id="acc-pay-btn" type="button">Payment details</button>
+  <div id="acc-pay" hidden>
+    <label for="acc-card">Card number</label>
+    <input id="acc-card" name="acc-card" type="text">
+  </div>
+  <button id="acc-notes-btn" type="button">Review notes</button>
+  <div id="acc-notes" hidden>
+    <label for="acc-note">Notes</label>
+    <textarea id="acc-note" name="acc-note"></textarea>
+  </div>
+  <button id="acc-submit" type="button">Submit form</button>
+  <div id="acc-done" hidden></div>
+  <script>
+    var SECTIONS = ['ship', 'pay', 'notes'];
+    SECTIONS.forEach(function (s) {
+      document.getElementById('acc-' + s + '-btn').addEventListener('click', function () {
+        SECTIONS.forEach(function (n) {
+          var el = document.getElementById('acc-' + n);
+          el.hidden = (n === s) ? !el.hidden : true;
+        });
+      });
+    });
+    document.getElementById('acc-submit').addEventListener('click', function () {
+      var street = document.getElementById('acc-street').value;
+      var card = document.getElementById('acc-card').value;
+      if (!street || !card) return;
+      var d = document.getElementById('acc-done');
+      d.textContent = 'Form submitted';
+      d.hidden = false;
+    });
+  </script>
+</body>
+</html>

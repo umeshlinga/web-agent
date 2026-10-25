@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Report search</title></head>
+<body>
+  <h1>Report search</h1>
+  <!-- Content loads late: results render well after the search click,
+       so the target button for the next step only appears after a
+       wait. The step postcondition has to poll for it. -->
+  <label for="query">Query</label>
+  <input id="query" name="query" type="text">
+  <button id="search-btn" type="button">Search</button>
+  <p id="search-status"></p>
+  <div id="results"></div>
+  <p id="detail"></p>
+  <script>
+    var REPORTS = ['Alpha report', 'Alpine guide', 'Beta notes'];
+    document.getElementById('search-btn').addEventListener('click', function () {
+      var q = document.getElementById('query').value.toLowerCase();
+      var st = document.getElementById('search-status');
+      st.textContent = 'Loading…';
+      document.getElementById('results').innerHTML = '';
+      setTimeout(function () {
+        st.textContent = '';
+        var box = document.getElementById('results');
+        REPORTS.filter(function (r) {
+          return r.toLowerCase().includes(q);
+        }).forEach(function (r) {
+          var row = document.createElement('div');
+          row.className = 'result';
+          var span = document.createElement('span');
+          span.textContent = r;
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.textContent = 'Open';
+          btn.addEventListener('click', function () {
+            document.getElementById('detail').textContent = 'Opened: ' + r;
+          });
+          row.appendChild(span);
+          row.appendChild(btn);
+          box.appendChild(row);
+        });
+      }, 1200);
+    });
+  </script>
+</body>
+</html>
