@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Customers — CRM</title></head>
+<body>
+  <h1>Customers</h1>
+  <!-- Customer list for a small CRM: searching narrows the table to
+       one record, Edit opens a panel prefilled with that record's
+       values, and saving writes the new status, phone and note back
+       into the table row and the record store. -->
+  <label for="crm-q">Search</label>
+  <input id="crm-q" name="crm-q" type="text" placeholder="Search customers">
+  <table>
+    <thead><tr><th>Customer</th><th>Contact</th><th>Status</th><th>Phone</th><th></th></tr></thead>
+    <tbody id="customers">
+      <tr data-name="Pulseworks" data-status="Prospect" data-phone="555-0108" data-note="">
+        <td>Pulseworks</td><td>Dana Ruiz</td><td class="st">Prospect</td><td class="ph">555-0108</td>
+        <td><button type="button" class="edit-btn">Edit</button></td>
+      </tr>
+      <tr data-name="Bluefin Studio" data-status="Active" data-phone="555-0119" data-note="">
+        <td>Bluefin Studio</td><td>Alex Park</td><td class="st">Active</td><td class="ph">555-0119</td>
+        <td><button type="button" class="edit-btn">Edit</button></td>
+      </tr>
+      <tr data-name="Harborline" data-status="On hold" data-phone="555-0126" data-note="">
+        <td>Harborline</td><td>Elena Brooks</td><td class="st">On hold</td><td class="ph">555-0126</td>
+        <td><button type="button" class="edit-btn">Edit</button></td>
+      </tr>
+      <tr data-name="Northbeam Traders" data-status="Prospect" data-phone="555-0131" data-note="">
+        <td>Northbeam Traders</td><td>Marta Chen</td><td class="st">Prospect</td><td class="ph">555-0131</td>
+        <td><button type="button" class="edit-btn">Edit</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <form id="crm-edit" hidden>
+    <h2 id="crm-edit-title"></h2>
+    <label for="crm-status">Status</label>
+    <select id="crm-status" name="crm-status">
+      <option value="Prospect">Prospect</option>
+      <option value="Active">Active</option>
+      <option value="On hold">On hold</option>
+    </select>
+    <label for="crm-phone">Phone</label>
+    <input id="crm-phone" name="crm-phone" type="text">
+    <label for="crm-note">Notes</label>
+    <input id="crm-note" name="crm-note" type="text">
+    <button id="crm-save" type="submit">Save changes</button>
+  </form>
+  <div id="crm-saved" hidden></div>
+
+  <script>
+    var editing = null;
+    function applyFilter() {
+      var q = document.getElementById('crm-q').value.toLowerCase();
+      document.querySelectorAll('#customers tr').forEach(function (row) {
+        row.style.display = row.dataset.name.toLowerCase().includes(q) ? '' : 'none';
+      });
+    }
+    document.getElementById('crm-q').addEventListener('input', applyFilter);
+    document.querySelectorAll('#customers .edit-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        editing = btn.closest('tr');
+        document.getElementById('crm-edit-title').textContent =
+          'Edit ' + editing.dataset.name;
+        document.getElementById('crm-status').value = editing.dataset.status;
+        document.getElementById('crm-phone').value = editing.dataset.phone;
+        document.getElementById('crm-note').value = editing.dataset.note;
+        document.getElementById('crm-edit').hidden = false;
+      });
+    });
+    document.getElementById('crm-edit').addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!editing) return;
+      var st = document.getElementById('crm-status').value;
+      var ph = document.getElementById('crm-phone').value;
+      var nt = document.getElementById('crm-note').value;
+      editing.dataset.status = st;
+      editing.dataset.phone = ph;
+      editing.dataset.note = nt;
+      editing.querySelector('.st').textContent = st;
+      editing.querySelector('.ph').textContent = ph;
+      document.getElementById('crm-edit').hidden = true;
+      var d = document.getElementById('crm-saved');
+      d.textContent = 'Record saved for ' + editing.dataset.name;
+      d.hidden = false;
+    });
+  </script>
+</body>
+</html>

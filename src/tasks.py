@@ -624,6 +624,135 @@ TASKS.extend([
 ])
 
 
+# -- business-workflow suite: 3 further tasks --------------------------------
+TASKS.extend([
+    Task(
+        name="crm_record_update",
+        fixture="crm_customers.html",
+        description="CRM: search the customer table down to one "
+                    "record, open it for editing, change its status, "
+                    "phone and notes, save, and confirm the table "
+                    "shows the saved values.",
+        steps=[
+            Step("fill", Target("textbox", label="Search"), "Pulseworks",
+                 verify=visible_rows("#customers tr", 1)),
+            Step("click", Target("button", text="Edit"),
+                 verify=element_visible("#crm-edit")),
+            Step("select", Target("combobox", label="Status"), "Active",
+                 verify=field_value_is("#crm-status", "Active")),
+            Step("fill", Target("textbox", label="Phone"), "555-0142",
+                 verify=field_value_is("#crm-phone", "555-0142")),
+            Step("fill", Target("textbox", label="Notes"),
+                 "Renewal confirmed for November",
+                 verify=field_value_is("#crm-note",
+                                       "Renewal confirmed for November")),
+            Step("click", Target("button", text="Save changes"),
+                 verify=all_of(
+                     text_is("#crm-saved", "Record saved for Pulseworks"),
+                     cell_text_is("#customers", 0, 2, "Active"),
+                     cell_text_is("#customers", 0, 3, "555-0142"))),
+        ],
+    ),
+    Task(
+        name="vendor_application",
+        fixture="vendor_application.html",
+        description="Four-step vendor application (company, contact, "
+                    "details, review, submit). The contact step "
+                    "rejects a malformed email mid-flow; it must be "
+                    "corrected before the application can proceed.",
+        steps=[
+            Step("fill", Target("textbox", label="Company name"),
+                 "Northbeam Traders",
+                 verify=field_value_is("#va-company", "Northbeam Traders")),
+            Step("select", Target("combobox", label="Industry"), "Software",
+                 verify=field_value_is("#va-industry", "Software")),
+            Step("click", Target("button", text="Next"),
+                 verify=element_visible("#va-step2")),
+            Step("fill", Target("textbox", label="Contact name"), "Marta Chen",
+                 verify=field_value_is("#va-contact", "Marta Chen")),
+            Step("fill", Target("textbox", label="Email"), "marta@northbeam",
+                 verify=field_value_is("#va-email", "marta@northbeam")),
+            Step("fill", Target("textbox", label="Phone"), "555-0117",
+                 verify=field_value_is("#va-phone", "555-0117")),
+            Step("click", Target("button", text="Next"),
+                 verify=text_contains("#va-errors", "valid email address")),
+            Step("fill", Target("textbox", label="Email"),
+                 "marta@northbeam.example",
+                 verify=field_value_is("#va-email", "marta@northbeam.example")),
+            Step("click", Target("button", text="Next"),
+                 verify=element_visible("#va-step3")),
+            Step("select", Target("combobox", label="Category"), "Software",
+                 verify=field_value_is("#va-category", "Software")),
+            Step("fill", Target("textbox", label="Expected monthly orders"),
+                 "250",
+                 verify=field_value_is("#va-orders", "250")),
+            Step("check", Target("checkbox", label="ISO 9001 certified"),
+                 verify=is_checked("#va-iso")),
+            Step("click", Target("button", text="Next"),
+                 verify=text_contains("#va-review", "Northbeam Traders")),
+            Step("click", Target("button", text="Submit application"),
+                 verify=text_is("#va-done",
+                                "Vendor application submitted for "
+                                "Northbeam Traders")),
+        ],
+    ),
+    Task(
+        name="lead_entry",
+        fixture="lead_entry.html",
+        description="Enter each lead from the inbox panel into the "
+                    "entered-leads table. The third inbox item repeats "
+                    "the first lead's email: the form refuses it with "
+                    "a duplicate warning and no new row is added.",
+        steps=[
+            Step("fill", Target("textbox", label="Full name"), "Ravi Shah",
+                 verify=field_value_is("#lead-name", "Ravi Shah")),
+            Step("fill", Target("textbox", label="Email"),
+                 "ravi@brightpath.example",
+                 verify=field_value_is("#lead-email", "ravi@brightpath.example")),
+            Step("fill", Target("textbox", label="Company"), "Brightpath",
+                 verify=field_value_is("#lead-company", "Brightpath")),
+            Step("click", Target("button", text="Add lead"),
+                 verify=all_of(visible_rows("#entered tr", 1),
+                               cell_text_is("#entered", 0, 0, "Ravi Shah"))),
+            Step("fill", Target("textbox", label="Full name"), "Elena Brooks",
+                 verify=field_value_is("#lead-name", "Elena Brooks")),
+            Step("fill", Target("textbox", label="Email"),
+                 "elena@harborline.example",
+                 verify=field_value_is("#lead-email",
+                                       "elena@harborline.example")),
+            Step("fill", Target("textbox", label="Company"), "Harborline",
+                 verify=field_value_is("#lead-company", "Harborline")),
+            Step("click", Target("button", text="Add lead"),
+                 verify=visible_rows("#entered tr", 2)),
+            Step("fill", Target("textbox", label="Full name"), "Ravi Shah",
+                 verify=field_value_is("#lead-name", "Ravi Shah")),
+            Step("fill", Target("textbox", label="Email"),
+                 "ravi@brightpath.example",
+                 verify=field_value_is("#lead-email", "ravi@brightpath.example")),
+            Step("fill", Target("textbox", label="Company"), "Brightpath",
+                 verify=field_value_is("#lead-company", "Brightpath")),
+            Step("click", Target("button", text="Add lead"),
+                 verify=all_of(
+                     text_contains("#lead-warning", "already exists"),
+                     visible_rows("#entered tr", 2))),
+            Step("fill", Target("textbox", label="Full name"), "Tom Okafor",
+                 verify=field_value_is("#lead-name", "Tom Okafor")),
+            Step("fill", Target("textbox", label="Email"),
+                 "tom@okafor.example",
+                 verify=field_value_is("#lead-email", "tom@okafor.example")),
+            Step("fill", Target("textbox", label="Company"),
+                 "Okafor Consulting",
+                 verify=field_value_is("#lead-company", "Okafor Consulting")),
+            Step("click", Target("button", text="Add lead"),
+                 verify=all_of(visible_rows("#entered tr", 3),
+                               cell_text_is("#entered", 2, 0, "Tom Okafor"),
+                               cell_text_is("#entered", 2, 1,
+                                            "tom@okafor.example"))),
+        ],
+    ),
+])
+
+
 # Category of each task, used for the per-category breakdown in RESULTS.md.
 TASK_CATEGORIES: dict[str, str] = {
     "login": "Forms & wizards",
@@ -656,4 +785,7 @@ TASK_CATEGORIES: dict[str, str] = {
     "adversarial_renamed_field": "Adversarial recovery",
     "adversarial_decoy_button": "Adversarial recovery",
     "adversarial_rename_under_overlay": "Adversarial recovery",
+    "crm_record_update": "Business workflows",
+    "vendor_application": "Business workflows",
+    "lead_entry": "Business workflows",
 }

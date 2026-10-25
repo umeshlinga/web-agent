@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Lead inbox</title></head>
+<body>
+  <h1>Lead inbox</h1>
+  <!-- New leads arrive as a plain list in the inbox panel; each one
+       is typed into the entry form and added to the entered-leads
+       table. The third inbox item repeats the first lead's email:
+       the form refuses it with a duplicate warning and adds no row.
+       A successful add clears the form for the next lead. -->
+  <h2>Inbox</h2>
+  <ul id="inbox">
+    <li>Ravi Shah — ravi@brightpath.example — Brightpath</li>
+    <li>Elena Brooks — elena@harborline.example — Harborline</li>
+    <li>Ravi Shah — ravi@brightpath.example — Brightpath</li>
+    <li>Tom Okafor — tom@okafor.example — Okafor Consulting</li>
+  </ul>
+
+  <form id="lead-form">
+    <label for="lead-name">Full name</label>
+    <input id="lead-name" name="lead-name" type="text">
+    <label for="lead-email">Email</label>
+    <input id="lead-email" name="lead-email" type="text">
+    <label for="lead-company">Company</label>
+    <input id="lead-company" name="lead-company" type="text">
+    <button id="lead-add" type="submit">Add lead</button>
+  </form>
+  <div id="lead-warning" hidden></div>
+
+  <h2>Entered leads</h2>
+  <table>
+    <thead><tr><th>Name</th><th>Email</th><th>Company</th></tr></thead>
+    <tbody id="entered"></tbody>
+  </table>
+
+  <script>
+    var emails = {};
+    document.getElementById('lead-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = document.getElementById('lead-name').value.trim();
+      var email = document.getElementById('lead-email').value.trim();
+      var company = document.getElementById('lead-company').value.trim();
+      var warn = document.getElementById('lead-warning');
+      if (!name || !email || !company) {
+        warn.textContent = 'Fill in every field before adding a lead';
+        warn.hidden = false;
+        return;
+      }
+      if (emails[email.toLowerCase()]) {
+        warn.textContent = 'A lead with this email already exists: ' + email;
+        warn.hidden = false;
+        return;
+      }
+      emails[email.toLowerCase()] = true;
+      var tr = document.createElement('tr');
+      [name, email, company].forEach(function (v) {
+        var td = document.createElement('td');
+        td.textContent = v;
+        tr.appendChild(td);
+      });
+      document.getElementById('entered').appendChild(tr);
+      warn.hidden = true;
+      warn.textContent = '';
+      document.getElementById('lead-name').value = '';
+      document.getElementById('lead-email').value = '';
+      document.getElementById('lead-company').value = '';
+    });
+  </script>
+</body>
+</html>

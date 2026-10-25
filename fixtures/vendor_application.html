@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Vendor application</title></head>
+<body>
+  <h1>Vendor application</h1>
+  <!-- Four-step vendor application: company, contact, details, then
+       review and submit. The contact step validates the email when
+       Next is clicked: a malformed address is rejected with an error
+       and the step cannot be passed until the address is corrected. -->
+
+  <fieldset id="va-step1">
+    <legend>Company</legend>
+    <label for="va-company">Company name</label>
+    <input id="va-company" name="va-company" type="text">
+    <label for="va-industry">Industry</label>
+    <select id="va-industry" name="va-industry">
+      <option value="Manufacturing">Manufacturing</option>
+      <option value="Software">Software</option>
+      <option value="Services">Services</option>
+      <option value="Retail">Retail</option>
+    </select>
+    <button id="va-next1" type="button">Next</button>
+  </fieldset>
+
+  <fieldset id="va-step2" hidden>
+    <legend>Contact</legend>
+    <label for="va-contact">Contact name</label>
+    <input id="va-contact" name="va-contact" type="text">
+    <label for="va-email">Email</label>
+    <input id="va-email" name="va-email" type="text">
+    <label for="va-phone">Phone</label>
+    <input id="va-phone" name="va-phone" type="text">
+    <ul id="va-errors"></ul>
+    <button id="va-next2" type="button">Next</button>
+  </fieldset>
+
+  <fieldset id="va-step3" hidden>
+    <legend>Details</legend>
+    <label for="va-category">Category</label>
+    <select id="va-category" name="va-category">
+      <option value="Hardware">Hardware</option>
+      <option value="Software">Software</option>
+      <option value="Consulting">Consulting</option>
+    </select>
+    <label for="va-orders">Expected monthly orders</label>
+    <input id="va-orders" name="va-orders" type="text">
+    <label for="va-iso">ISO 9001 certified</label>
+    <input id="va-iso" name="va-iso" type="checkbox">
+    <button id="va-next3" type="button">Next</button>
+  </fieldset>
+
+  <fieldset id="va-step4" hidden>
+    <legend>Review</legend>
+    <p id="va-review"></p>
+    <button id="va-submit" type="button">Submit application</button>
+  </fieldset>
+
+  <div id="va-done" hidden></div>
+
+  <script>
+    document.getElementById('va-next1').addEventListener('click', function () {
+      if (!document.getElementById('va-company').value) return;
+      document.getElementById('va-step1').hidden = true;
+      document.getElementById('va-step2').hidden = false;
+    });
+    document.getElementById('va-next2').addEventListener('click', function () {
+      var email = document.getElementById('va-email').value;
+      var errs = [];
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+        errs.push('Enter a valid email address');
+      }
+      var ul = document.getElementById('va-errors');
+      ul.innerHTML = '';
+      errs.forEach(function (m) {
+        var li = document.createElement('li');
+        li.textContent = m;
+        ul.appendChild(li);
+      });
+      if (errs.length) return;
+      document.getElementById('va-step2').hidden = true;
+      document.getElementById('va-step3').hidden = false;
+    });
+    document.getElementById('va-next3').addEventListener('click', function () {
+      var co = document.getElementById('va-company').value;
+      var ct = document.getElementById('va-contact').value;
+      var em = document.getElementById('va-email').value;
+      var cat = document.getElementById('va-category').value;
+      document.getElementById('va-review').textContent =
+        'Company: ' + co + ' — Contact: ' + ct + ' (' + em + ')' +
+        ' — Category: ' + cat;
+      document.getElementById('va-step3').hidden = true;
+      document.getElementById('va-step4').hidden = false;
+    });
+    document.getElementById('va-submit').addEventListener('click', function () {
+      var co = document.getElementById('va-company').value;
+      var d = document.getElementById('va-done');
+      d.textContent = 'Vendor application submitted for ' + co;
+      d.hidden = false;
+      document.getElementById('va-step4').hidden = true;
+    });
+  </script>
+</body>
+</html>

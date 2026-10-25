@@ -1,7 +1,7 @@
 {
   "mode": "on",
   "recovery": true,
-  "ran_at": "2026-10-25T09:20:59+00:00",
+  "ran_at": "2026-10-25T11:39:04+00:00",
   "tasks": [
     {
       "task": "login",
@@ -302,8 +302,38 @@
       "attempts": 5,
       "recoveries": 2,
       "error": ""
+    },
+    {
+      "task": "crm_record_update",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 6,
+      "steps_total": 6,
+      "attempts": 6,
+      "recoveries": 0,
+      "error": ""
+    },
+    {
+      "task": "vendor_application",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 14,
+      "steps_total": 14,
+      "attempts": 14,
+      "recoveries": 0,
+      "error": ""
+    },
+    {
+      "task": "lead_entry",
+      "adversarial": false,
+      "success": true,
+      "steps_completed": 16,
+      "steps_total": 16,
+      "attempts": 16,
+      "recoveries": 0,
+      "error": ""
     }
   ],
-  "passed": 30,
-  "total": 30
+  "passed": 33,
+  "total": 33
 }
